@@ -18,7 +18,7 @@ public class MainWindow {
 	private Server server;
 	private JTextField enviarTextField;
 	private JTextField recibirTextField;
-	
+
 	private String ultimoMensaje = null;
 
 	/**
@@ -81,11 +81,11 @@ public class MainWindow {
 		recibirTextField.setBounds(35, 213, 130, 26);
 		frame.getContentPane().add(recibirTextField);
 		recibirTextField.setColumns(10);
-		
+
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(37, 139, 61, 16);
 		frame.getContentPane().add(lblNewLabel);
-		
+
 		JButton btnNewButton = new JButton("New button");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,12 +109,24 @@ public class MainWindow {
 		this.server = server;
 	}
 
-	public void recibirMensaje(String mensaje, boolean skipBlock) throws InterruptedException {
-		System.out.println(this);
-		if(!skipBlock && (ultimoMensaje == null || !ultimoMensaje.equals(mensaje))) {
-			System.out.println("bloquear ----->>>>");
-			Thread.sleep(5000);
-		}
-		this.recibirTextField.setText(mensaje);
+	public void recibirMensaje(final String mensaje, final boolean skipBlock) throws InterruptedException {
+		System.out.println("recibo mensaje");
+		Runnable tareaParaHilo = new Runnable() {
+			public void run() {
+				System.out.println("empieza tarea para el hilo");
+				System.out.println("bloquear ----->>>>");
+				try {
+					System.out.println("me voy a dormir");
+					Thread.sleep(5000);
+					System.out.println("buenos dias");
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				recibirTextField.setText(mensaje);
+				System.out.println("soy un vago y recien termino de hacer la tarea");
+			}
+		};
+		new Thread(tareaParaHilo).start();
+		System.out.println("recibi mensaje");
 	}
 }

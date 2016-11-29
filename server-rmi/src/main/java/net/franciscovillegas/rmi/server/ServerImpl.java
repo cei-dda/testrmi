@@ -22,13 +22,17 @@ public class ServerImpl implements Server {
 	public void enviarMensaje(String mensaje) throws RemoteException {
 		for (Cliente cliente : this.clientes) {
 			cliente.notificar(mensaje, false);
+			System.out.println("envio mensaje");
 		}
+		System.out.println("termino de enviar mensaje");
 	}
 
 	public void enviarMensaje(long mensaje) throws RemoteException {
 		for (Cliente cliente : this.clientes) {
 			cliente.notificar(String.valueOf(mensaje), true);
+			System.out.println("envio mensaje");
 		}
+		System.out.println("termino de enviar mensaje");
 	}
 
 }

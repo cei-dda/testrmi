@@ -23,6 +23,7 @@ public class App extends UnicastRemoteObject implements Cliente {
 
 	public static void main(String[] args) throws RemoteException, NotBoundException {
 		new App();
+		new App();
 	}
 
 	public App() throws RemoteException, NotBoundException {
@@ -51,5 +52,15 @@ public class App extends UnicastRemoteObject implements Cliente {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void notificar(String mensaje, boolean skipBlock) throws RemoteException {
+		try {
+			System.out.println("......");
+			this.window.recibirMensaje(mensaje);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 	}
 }
